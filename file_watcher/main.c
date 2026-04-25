@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/inotify.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 int main(int argc, char **argv) {
@@ -22,8 +23,11 @@ int main(int argc, char **argv) {
         perror("inotify_add_watch");
         return -1;
     }
-
-    if (strcmp(argv[1], ".") == 0) {
+    struct stat sb;
+    if (stat(watch_dir, &sb) != 0 || !S_ISDIR(sb.st_mode)) {
+        printf("Error: %s is not a directory\n", watch_dir);
+        return -1;
+    } else if (strcmp(argv[1], ".") == 0) {
         printf("Watching current directory\n");
     } else {
         printf("Watching directory %s\n", argv[1]);
