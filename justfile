@@ -1,7 +1,7 @@
 # you can use this justfile in root with "just ${filename}" and it will find that file and compile and run it
-# E.g. just fw
+# E.g. just cp fw
 # or even many files at once.
-# E.g. just qr qrcodegen
+# E.g. just cp qr qrcodegen
 
 [group('compile')]
 [linux, macos]
